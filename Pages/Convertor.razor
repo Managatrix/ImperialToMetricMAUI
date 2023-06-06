@@ -1,0 +1,166 @@
+﻿@page "/"
+
+<PageTitle>Convertor</PageTitle>
+
+<MudText Class="mt-3" Typo="Typo.h5">Distance</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="feet" TextChanged="ConvertToMeters" Immediate="true"
+        Label="Feet" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="meters" TextChanged="ConvertToFeet" Immediate="true"
+        Label="Meters" Variant="Variant.Outlined" Min="0.0" Format="F2" />
+</div>
+
+<MudText Class="mt-3" Typo="Typo.h5">Mass</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="pounds" TextChanged="ConvertToKilograms" Immediate="true"
+        Label="Pounds" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="kilograms" TextChanged="ConvertToPounds" Immediate="true"
+        Label="Kilograms" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+</div>
+
+<MudText Class="mt-3" Typo="Typo.h5">Volume</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="ounces" TextChanged="ConvertToLitres" Immediate="true"
+        Label="Ounces" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="litres" TextChanged="ConvertToOunces" Immediate="true"
+        Label="Litres" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+</div>
+
+<MudText Class="mt-3" Typo="Typo.h5">Temperature</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="fahrenheit" TextChanged="ConvertToCelsius" Immediate="true"
+        Label="Fahrenheit" Variant="Variant.Outlined" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="celsius" TextChanged="ConvertToFahrenheit" Immediate="true"
+        Label="Celsius" Variant="Variant.Outlined" Format="F2" Clearable="true" />
+</div>
+
+<MudText Class="mt-3" Typo="Typo.h5">Speed</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="mph" TextChanged="ConvertToKmph" Immediate="true" Label="mph"
+        Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="kmph" TextChanged="ConvertToMph" Immediate="true" Label="km/h"
+        Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+</div>
+
+<MudText Class="mt-3" Typo="Typo.h5">Fuel Economy</MudText>
+<div class="d-flex flex-grow-1 gap-4">
+    <MudNumericField HideSpinButtons="true" @bind-Value="mpg" TextChanged="ConvertToKmPer100L" Immediate="true"
+        Label="mpg" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+
+    <MudNumericField HideSpinButtons="true" @bind-Value="kmPer100L" TextChanged="ConvertToMpg" Immediate="true"
+        Label="km/100L" Variant="Variant.Outlined" Min="0.0" Format="F2" Clearable="true" />
+</div>
+
+<div class="text-center my-4">
+    <MudButton Variant="Variant.Outlined" OnClick="ResetInputs">Reset</MudButton>
+</div>
+
+@code {
+    double? feet;
+    double? meters;
+    double? pounds;
+    double? kilograms;
+    double? fahrenheit;
+    double? celsius;
+    double? ounces;
+    double? litres;
+    double? mph;
+    double? kmph;
+    double? mpg;
+    double? kmPer100L;
+
+    private void ResetInputs()
+    {
+        feet = null;
+        meters = null;
+        pounds = null;
+        kilograms = null;
+        ounces = null;
+        litres = null;
+        fahrenheit = null;
+        celsius = null;
+        mph = null;
+        kmph = null;
+        mpg = null;
+        kmPer100L = null;
+    }
+
+    private void ConvertToMeters()
+    {
+        meters = feet / 3.28084;
+    }
+
+    private void ConvertToFeet()
+    {
+        feet = meters * 3.28084;
+    }
+
+    private void ConvertToKilograms()
+    {
+        kilograms = pounds / 2.20462;
+    }
+
+    private void ConvertToPounds()
+    {
+        pounds = kilograms * 2.20462;
+    }
+    private void ConvertToCelsius()
+    {
+        celsius = (fahrenheit - 32) * 5 / 9;
+    }
+
+    private void ConvertToFahrenheit()
+    {
+        fahrenheit = (celsius * 9 / 5) + 32;
+    }
+
+    private void ConvertToLitres()
+    {
+        litres = ounces / 33.814;
+    }
+
+    private void ConvertToOunces()
+    {
+        ounces = litres * 33.814;
+    }
+
+    private void ConvertToKmph()
+    {
+        kmph = mph * 1.60934;
+    }
+
+    private void ConvertToMph()
+    {
+        mph = kmph / 1.60934;
+    }
+
+    private void ConvertToKmPer100L()
+    {
+        if(mpg != 0)
+        {
+            kmPer100L = 235.215 / mpg;
+        }
+        else
+        {
+            kmPer100L = 0;
+        }
+        
+    }
+
+    private void ConvertToMpg()
+    {
+        if (kmPer100L != 0)
+        {
+            mpg = 235.215 / kmPer100L;
+        }
+        else
+        {
+            mpg = 0;
+        }
+    }
+}
